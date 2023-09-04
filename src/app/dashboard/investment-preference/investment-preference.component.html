@@ -1,0 +1,34 @@
+<div class="form-container">
+    <mat-card>
+        <mat-card-title>Investment Preference Form</mat-card-title>
+        <mat-card-content>
+            <form (ngSubmit) = "onSubmit()">
+                <mat-form-field>
+                    <mat-label>Investment Purpose</mat-label>
+                    <mat-select name="investmentPurpose" (selectionChange)="onInvestmentPurposeChange($event)" required>
+                        <mat-option *ngFor="let purpose of investmentPurposes" [value]="purpose">{{purpose}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Risk Tolerance</mat-label>
+                    <mat-select name="riskTolerance" (selectionChange)="onRiskToleranceChange($event)" required>
+                        <mat-option *ngFor="let tolerance of riskTolerances" [value]="tolerance">{{tolerance}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Income Category</mat-label>
+                    <mat-select name="incomeCategory" (selectionChange)="onIncomeCategoryChange($event)" required>
+                        <mat-option *ngFor="let category of incomeCategories" [value]="category">{{category}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Investment Length</mat-label>
+                    <mat-select name="investmentLength" (selectionChange)="onInvestmentPurposeChange($event)" required>
+                        <mat-option *ngFor="let length of investmentLengths" [value]="length">{{length}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button type="submit">Submit</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

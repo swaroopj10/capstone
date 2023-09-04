@@ -1,0 +1,19 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+.mat-form-field {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.mat-form-field {
+    color: #343f3eff;
+}

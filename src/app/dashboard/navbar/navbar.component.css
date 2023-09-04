@@ -1,0 +1,46 @@
+.logo img{
+    margin-top: 10px;
+    max-width: 200px;
+    height: 150px;
+    margin-left: -20px;
+}
+
+mat-toolbar {
+    background-color: #dcedffff;
+}
+
+.nav-list {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    align-content: center;
+    margin-left: 10px;
+}
+
+.nav-list a {
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+button {
+    padding: 10px;
+    background-color: #dcedffff;
+    border: none;
+    font-size: medium;
+    display: flex;
+    align-items: center;
+}
+
+mat-icon {
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #94b0daff;
+    color: white;
+    border-radius: 5px;
+}
+
+
+
