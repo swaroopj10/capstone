@@ -1,0 +1,22 @@
+.button-group {
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: white;
+  }
+  
+.rounded-button {
+    color: white !important;
+    margin: 10px;
+    padding: 30px 50px;
+    border-radius: 50px; 
+    background-color: #505a5bff; 
+    font-size: medium;
+}
+
+
+button:hover {
+    background-color: #8f91a2ff;
+    color: white;
+}
+  
