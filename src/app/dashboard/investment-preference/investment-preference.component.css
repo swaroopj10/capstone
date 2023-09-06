@@ -4,16 +4,70 @@
     align-items: center;
     height: 100vh;
 }
+
 form {
     display: flex;
     flex-direction: column;
     margin: 20px;
 }
-.mat-form-field {
-    display: block;
-    margin-bottom: 20px;
+
+.custom-card {
+    width: 80%;
+    background-color: #f0f0f0; /* Change this to your desired background color */
+    padding: 20px;
+  }
+  
+  .form-field-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.full-width {
+    width: 100%;
+    margin-bottom: 15px; 
 }
 
-.mat-form-field {
-    color: #343f3eff;
+mat-card-content  {
+    font-size: x-large;
+    font-weight: medium;
 }
+
+mat-checkbox {
+    color: white !important;
+}
+
+button {
+    background-color: #8f91a2ff !important;
+    color: white !important;
+}
+
+
+.mat-input {
+    background-color: #8f91a2ff; 
+  }
+  
+  .mat-form-field label {
+    color: #8f91a2ff !important; 
+  }
+  
+
+  .mat-input {
+    border: 2px solid #8f91a2ff; 
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .mat-option {
+    background-color: #8f91a2ff;
+  }
+  
+  .mat-input:focus {
+    outline: none; 
+    border-color: #8f91a2ff; 
+    box-shadow: 0 0 5px #8f91a2ff; 
+  }
+
+  mat-checkbox {
+    fill: #8f91a2ff !important;
+  }
+  

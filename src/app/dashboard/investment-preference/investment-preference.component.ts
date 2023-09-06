@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -6,51 +7,38 @@ import { MatSelectChange } from '@angular/material/select';
   templateUrl: './investment-preference.component.html',
   styleUrls: ['./investment-preference.component.css']
 })
-export class InvestmentPreferenceComponent {
-  selectedInvestmentPurpose!: string;
-  selectedRiskTolerance!: string;
-  selectedIncomeCategory!: string;
-  selectedInvestmentLength!: string;
+
+  export class InvestmentPreferenceComponent {
+    componentColor = "primary";
+    formDataModel = {
+      incomePurpose: '',
+      incomeCategory: '',
+      investmentLength: '',
+      riskTolerance: '',
+      acceptTerms: false
+    };
   
-  investmentPurposes: string[] = ['Retirement', 'Income', 'General'];
-  riskTolerances: string[] = ['Low', 'Medium', 'High'];
-  incomeCategories: string[] = ['Below 1L', '1L - 5L', '5L - 10L', '10L - 20L', 'Above 20L'];
-  investmentLengths: string[] = ['Short-Term', 'Medium-Term', 'Long-Term'];
+  submittedData: any;
+  
+  riskTolerances: string[] = [ 'CONSERVATIVE', 'BELOW AVERAGE', 'AVERAGE', 'ABOVE AVERAGE', 'AGGRESSIVE'];
+  incomeCategories: string[] = [ '0 - 20,000', '20,001 - 40,000', '40,001 - 60,000', '60,001 - 80,000', '80,001 - 100,000', '100,001 - 150,000', '150,000+'];
+  investmentLengths: string[] = [ '0-5 years', '5-7 years', '7-10 years', '10-15 years' ];
+  
+    onSubmit(formData: any): void {
+      if (formData.valid) {
+        // Save the data (e.g., send it to an API)
+        console.log('Submitted Data:', this.formDataModel);
+  
+        // Update the form data with submitted values
+        this.submittedData = { ...this.formDataModel };
+  
+        // Display an alert that preferences have been updated
+        alert('Preferences have been updated.');
+      }
+    }
 
-  previousData = {
-    investmentPurpose : 'Retirement',
-    riskTolerance : 'Medium',
-    incomeCategory : '5L - 10L',
-    investmentLength : 'Medium-Term'
-  }
+    onCheckboxChange(event: any): void {
+      this.formDataModel.acceptTerms = event.checked;
+    }
+  }  
 
-  ngOnInit() {
-    this.selectedInvestmentPurpose = this.previousData.investmentPurpose;
-    this.selectedRiskTolerance = this.previousData.riskTolerance;
-    this.selectedIncomeCategory = this.previousData.incomeCategory;
-    this.selectedInvestmentLength = this.previousData.investmentLength;
-  }
-
-  onSubmit() {
-    this.previousData.investmentPurpose = this.selectedInvestmentPurpose;
-    this.previousData.riskTolerance = this.selectedRiskTolerance;
-    this.previousData.incomeCategory = this.selectedIncomeCategory;
-    this.previousData.investmentLength = this.selectedInvestmentLength;
-  }
-
-  onInvestmentPurposeChange(event: MatSelectChange) {
-    this.selectedInvestmentPurpose = event.value
-  }
-
-  onRiskToleranceChange(event: MatSelectChange) {
-    this.selectedRiskTolerance = event.value
-  }
-
-  onIncomeCategoryChange(event: MatSelectChange) {
-    this.selectedIncomeCategory = event.value
-  }
-
-  onInvestmentLengthChange(event: MatSelectChange) {
-    this.selectedInvestmentLength = event.value
-  }
-}

@@ -1,1 +1,52 @@
-<p>buy works!</p>
+<div class="card-container">
+    <ng-container *ngFor="let stock of stocks">
+      <mat-card class="stock-card">
+        <mat-card-title>{{ stock.name }}</mat-card-title>
+        <mat-card-content>
+          <div class="info">
+            <div class="info-item">
+              <span class="info-key">Instrument ID:</span>
+              <span class="info-value">{{ stock.instrumentId }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">External ID Type:</span>
+              <span class="info-value">{{ stock.externalIdType }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-key">External ID:</span>
+                <span class="info-value">{{ stock.externalId }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-key">Category ID:</span>
+                <span class="info-value">{{ stock.categoryId }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-key">Description:</span>
+                <span class="info-value">{{ stock.instrumentDescription }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-key">Max Quantity:</span>
+                <span class="info-value">{{ stock.maxQuantity }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-key">Min Quantity:</span>
+                <span class="info-value">{{ stock.minQuantity }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Price:</span>
+              <span class="info-value">{{ stock.price }}</span>
+          </div>
+          </div>
+        </mat-card-content>
+        <div class="button-container">
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" [(ngModel)]="stock.quantityToBuy" />
+          </mat-form-field>
+        </div>
+        <div class="button-container">
+          <button mat-raised-button (click)="buyStock(stock)">Buy</button>
+        </div>
+      </mat-card>
+    </ng-container>
+</div>
