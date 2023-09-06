@@ -1,1 +1,28 @@
-<p>portfolio works!</p>
+
+<div *ngIf="stocks.length === 0">
+    <mat-card class="empty-card">
+      To Holdings available.
+    </mat-card>
+  </div>
+<table *ngIf="stocks.length > 0">
+    <thead>
+        <tr>
+            <th>Instrument ID</th>
+            <th>External Id Type</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stock of stocks">
+            <td>{{stock.instrumentId}}</td>
+            <td>{{stock.externalIdType}}</td>
+            <td>{{stock.categoryId}}</td>
+            <td>{{stock.instrumentDescription}}</td>
+            <td>{{stock.quantityOwned}}</td>
+            <td>{{stock.price}}</td>
+        </tr>
+    </tbody>
+</table>
