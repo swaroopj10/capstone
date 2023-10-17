@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StockService {
-  availableBalance: number = 100000000; 
+  availableBalance: number = 50000; 
+  portfolioWorth: number = 0;
   private stocks: any[] = [
     {
       "price": 5000,
@@ -52,7 +53,7 @@ export class StockService {
       "externalIdType": "CUSIP",
       "externalId": "48123Y5A0",
       "categoryId": "CD",
-      "instrumentDescription": "JPMorgan Chase Bank, National Association 01\/19",
+      "instrumentDescription": "JPMorgan Chase Bank Association",
       "maxQuantity": 1000,
       "minQuantity": 100
   },  
@@ -60,7 +61,22 @@ export class StockService {
 
   private trades: any[] = [];
   private ownedStocks: any[] = [];
+  private investmentPreferences: any = {
+    investmentPurpose: '',
+    riskTolerance: '',
+    investmentLength: '',
+    incomeCategory: '',
+    acceptTerms: false
+  };
 
+  getPreferences() {
+    return this.investmentPreferences;
+  }
+
+  updateInvestmentPreferences(preferences: any) {
+    this.investmentPreferences = preferences;
+  }
+  
   getStocks() {
     return this.stocks;
   }
@@ -74,7 +90,7 @@ export class StockService {
       return false;
     }
     const trade = {
-      type: 'buy',
+      type: 'Buy',
       instrumentId: stocks.instrumentId,
       quantity,
       price: stocks.price,
@@ -89,7 +105,7 @@ export class StockService {
     this.trades.push(trade);
     const ownedStock = { ...stocks, quantityOwned: quantity };
     this.ownedStocks.push(ownedStock);
-
+    this.portfolioWorth += quantity * stocks.price;
     return true;
   }
 
@@ -100,7 +116,7 @@ export class StockService {
     }
 
     const trade = {
-      type: 'sell',
+      type: 'Sell',
       instrumentId: stocks.instrumentId,
       quantity,
       price: stocks.price,
@@ -115,6 +131,7 @@ export class StockService {
     this.trades.push(trade);
     ownedStock.quantityOwned -= quantity;
     this.availableBalance += ownedStock.price * quantity;
+    this.portfolioWorth -= ownedStock.price * quantity;
 
     if (ownedStock.quantityOwned === 0) {
       const index = this.ownedStocks.indexOf(ownedStock);

@@ -1,1 +1,64 @@
-<p>registration works!</p>
+<div class="bootstrap-wrapper">
+    <div class="container">
+        <div class="row mt20" style="margin-top: 30px;">
+                <div class="col-md-6 offset-md-3">
+                        <mat-card>
+                                <div class="image-container">
+                                        <img src="../../../assets/Investment data-amico.png">
+                                        <div class>
+                                                <h1 class="text-center">Registration</h1>
+                                                <form (ngSubmit)="formSubmit()">
+                                                        <!-- Email ID Field -->
+                                                        <mat-form-field class="full-width" appearance="outline">
+                                                                <mat-label>Enter Email ID</mat-label>
+                                                                <input [(ngModel)]="email" name="username"
+                                                                        matInput
+                                                                        placeholder="johndoe@example.com"
+                                                                        required>
+                                                        </mat-form-field>
+                                                        <mat-form-field class="full-width" appearance="outline">
+                                                            <mat-label>Select Country</mat-label>
+                                                            <mat-select [(ngModel)]="selectedCountry" name="selectedCountry">
+                                                              <mat-option value="India">India</mat-option>
+                                                              <mat-option value="USA">USA</mat-option>
+                                                            </mat-select>
+                                                          </mat-form-field>
+                                                          <mat-form-field class="full-width" appearance="outline">
+                                                                <mat-label>Select Identification Type</mat-label>
+                                                                <mat-select [(ngModel)]="selectedIdentificationType" name="selectedIdentificationType">
+                                                                  <mat-option *ngIf="selectedCountry === 'India'" value="PAN">PAN</mat-option>
+                                                                  <mat-option *ngIf="selectedCountry === 'USA'" value="SSN">SSN</mat-option>
+                                                                </mat-select>
+                                                        </mat-form-field>
+                                                        <mat-form-field class="full-width" appearance="outline">
+                                                                <mat-label>Enter Identification Value</mat-label>
+                                                                <input [(ngModel)]="identificationValue" name="identificationValue"
+                                                                        matInput
+                                                                        placeholder="ABCDE1234F"
+                                                                        required>
+                                                        </mat-form-field> 
+                                                          <mat-form-field class="full-width" appearance="outline">
+                                                            <input matInput [matDatepicker]="dobPicker" [(ngModel)]="selectedDOB" name="selectedDOB" placeholder="Date of Birth" [max]="maxDOB">
+                                                            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #dobPicker></mat-datepicker>
+                                                          </mat-form-field>
+                                                          <mat-form-field class="full-width" appearance="outline">
+                                                                <mat-label>Enter Postal Code</mat-label>
+                                                                <input [(ngModel)]="postalCode" name="postalCode"
+                                                                        matInput
+                                                                        placeholder="600001"
+                                                                        required>
+                                                        </mat-form-field>
+                                                        <mat-card-actions>
+                                                                <button mat-raised-button
+                                                                        class="login-button">Register</button>
+                                                        </mat-card-actions>
+                                                </form>
+                                        </div>
+                                </div>
+                        </mat-card>
+                </div>
+
+        </div>
+</div>
+</div>

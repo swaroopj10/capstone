@@ -1,1 +1,27 @@
-<p>trade-history works!</p>
+<div *ngIf="stocks.length === 0">
+    <mat-card class="empty-card">
+        No Trades executed.
+    </mat-card>
+</div>
+<table *ngIf="stocks.length > 0">
+    <thead>
+        <tr>
+            <th>Trade ID</th>
+            <th>Instrument ID</th>
+            <th>Quantity</th>
+            <th>Execution Price</th>
+            <th>Direction</th>
+            <th>Cash Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stock of stocks">
+            <td>{{stock.tradeId}}</td>
+            <td>{{stock.instrumentId}}</td>
+            <td>{{stock.quantity}}</td>
+            <td>{{stock.executionPrice | currency}}</td>
+            <td>{{stock.direction}}</td>
+            <td>${{stock.cashValue | number:'1.2-2'}}</td>
+        </tr>
+    </tbody>
+</table>

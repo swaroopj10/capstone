@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginService } from '../../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
+import { AuthService } from 'src/app/services/auth.service';
+import { ClientResponse } from 'src/app/models/client-response';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,39 +16,48 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   countries: string[] = ["USA", "India", "Ireland"];
-  constructor(private router: Router, private auth: LoginService, private snack: MatSnackBar) { }
+
+  constructor(private router: Router, private auth: AuthService, private snack: MatSnackBar) { }
+
   ngOnInit(): void {
   }
+
   formSubmit() {
     if (this.email == '' || this.password == null) {
-      // alert('Email Address is Required');
-      this.snack.open('Email Address is Required!!', '', {
+      this.snack.open('All Fields are required!!', '', {
         duration: 2100,
-        // verticalPosition:'top',
-        // horizontalPosition:'right',
       });
       return;
     }
-    this.message = this.auth.login(this.email, this.password)
-    if (this.message == 1) {
-      Swal.fire(
-        'Successfully Logged In! Welcome to Golden Securities!'
-      )
-      this.router.navigate(['/home']);
-    }
-    else if (this.message == 2) {
-      Swal.fire(
-        'Username and Password do not match! Please try again!',
-        'Login Failed'
-      )
-      //this.router.navigate(['/']);
-    }
-    else {
-      Swal.fire(
-        'Invalid Credentials! Please try again!',
-        'Login Failed'
-      )
-      //this.router.navigate(['/']);
-    }
-  };
+
+    this.auth.login(this.email, this.password).subscribe({
+      next: (response: any) => {
+        // Successfully logged in
+        sessionStorage.setItem('clientId', this.password);
+        sessionStorage.setItem('email', this.email);
+        sessionStorage.setItem('token', response)
+        const clientId = sessionStorage.getItem('clientId');
+        const defaultClientId: string = clientId ?? '100';
+        Swal.fire('Successfully Logged In! Welcome to Trade Wave');
+        this.auth.checkInvestmentPreferences(defaultClientId).subscribe({
+          next: (hasInvestmentPreferences: boolean) => {
+            if (!hasInvestmentPreferences) {
+              this.router.navigate(['dashboard/investment-preference']);
+            } else {
+              this.router.navigate(['dashboard/portfolio']);
+            }
+          },
+          error: (error: string) => {
+            // Handle error when checking investment preferences
+            Swal.fire('Error', 'Failed to check investment preferences', 'error');
+            this.router.navigate(['dashboard/investment-preference']);
+          },
+        });
+      },
+      error: (error: string) => {
+        // Handle login errors
+        Swal.fire('Login Failed', error, 'error');
+      },
+    });
+  }
 }

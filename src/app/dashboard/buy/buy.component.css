@@ -3,8 +3,10 @@ h1 {
     color: #343f3eff;
 }
 .stock-card {
-    flex: 1;
-    max-width: 275px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 260px; 
     margin: 16px;
     background-color: #8f91a2ff;
     color: white;
@@ -48,11 +50,26 @@ h1 {
   }
   
 button {
-    background-color: #f8f8f8 !important; 
+    background-color: white !important; 
     margin: 4px;
 }
 
 .mat-form-field {
     margin-top: auto;
     width: 100px;
+}
+
+
+.input-container {
+    margin-left: 15px;
+    align-items: center;
+}
+
+.custom-card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 7px;
+    color: #343f3eff;
 }

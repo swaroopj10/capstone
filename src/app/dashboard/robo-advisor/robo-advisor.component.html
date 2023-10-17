@@ -1,96 +1,93 @@
 <!-- src/app/stock-card/stock-card.component.html -->
-<h1>Top 5 Stocks to Buy</h1>
-<div class="card-container">
-    <ng-container *ngFor="let stock of buyStocks">
-      <mat-card class="stock-card">
-        <mat-card-title>{{ stock.name }}</mat-card-title>
-        <mat-card-content>
-          <div class="info">
-            <div class="info-item">
-              <span class="info-key">Instrument ID:</span>
-              <span class="info-value">{{ stock.instrumentId }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-key">External ID Type:</span>
-              <span class="info-value">{{ stock.externalIdType }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-key">External ID:</span>
-                <span class="info-value">{{ stock.externalId }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-key">Category ID:</span>
-                <span class="info-value">{{ stock.categoryId }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-key">Description:</span>
-                <span class="info-value">{{ stock.instrumentDescription }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-key">Max Quantity:</span>
-                <span class="info-value">{{ stock.maxQuantity }}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-key">Min Quantity:</span>
-                <span class="info-value">{{ stock.minQuantity }}</span>
-            </div>
+<h1>Top Stocks to Buy</h1>
+<div *ngIf="stocks.length === 0">
+  <mat-card class="empty-card">
+      Investment Preference not set.
+  </mat-card>
+</div>
+<div class="card-container" *ngIf="stocks.length > 0">
+  <ng-container *ngFor="let price of stocks">
+    <mat-card class="stock-card">
+      <mat-card-title class="custom-card-title">{{ price.instrument.instrumentDescription }}</mat-card-title>
+      <mat-card-content>
+        <div class="info">
+          <div class="info-item">
+            <span class="info-key">Instrument ID:</span>
+            <span class="info-value">{{ price.instrument.instrumentId }}</span>
           </div>
-        </mat-card-content>
-        <div class="button-container">
-          <button mat-raised-button>Buy</button>
+          <div class="info-item">
+            <span class="info-key">Category ID:</span>
+            <span class="info-value">{{ price.instrument.categoryId }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">Ask Price:</span>
+            <span class="info-value">{{ price.askPrice }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">Min Quantity:</span>
+            <span class="info-value">{{ price.instrument.minQuantity }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">Max Quantity:</span>
+            <span class="info-value">{{ price.instrument.maxQuantity }}</span>
+          </div>
         </div>
-      </mat-card>
-    </ng-container>
+      </mat-card-content>
+        <div class="input-container">
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" placeholder="Quantity" [(ngModel)]="price.quantityToTrade" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Target Price</mat-label>
+            <input matInput type="number" placeholder="Target Price" [(ngModel)]="price.targetPrice" />
+          </mat-form-field>
+        </div>
+      <div class="button-container">
+        <button mat-raised-button (click)="buyStock(price)">Buy</button>
+      </div>
+    </mat-card>
+  </ng-container>
 </div>
 <h1>Top Stocks to Sell</h1>
-<div class="card-container">
-    <ng-container *ngFor="let stock of sellStocks">
-      <mat-card class="stock-card">
-        <mat-card-title>{{ stock.name }}</mat-card-title>
-        <mat-card-content>
-          <div class="info">
-            <div class="info-item">
-                <span class="info-key">Instrument ID:</span>
-                <span class="info-value">{{ stock.instrumentId }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-key">External ID Type:</span>
-                <span class="info-value">{{ stock.externalIdType }}</span>
-              </div>
-              <div class="info-item">
-                  <span class="info-key">External ID:</span>
-                  <span class="info-value">{{ stock.externalId }}</span>
-              </div>
-              <div class="info-item">
-                  <span class="info-key">Category ID:</span>
-                  <span class="info-value">{{ stock.categoryId }}</span>
-              </div>
-              <div class="info-item">
-                  <span class="info-key">Description:</span>
-                  <span class="info-value">{{ stock.instrumentDescription }}</span>
-              </div>
-              <div class="info-item">
-                  <span class="info-key">Max Quantity:</span>
-                  <span class="info-value">{{ stock.maxQuantity }}</span>
-              </div>
-              <div class="info-item">
-                  <span class="info-key">Min Quantity:</span>
-                  <span class="info-value">{{ stock.minQuantity }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-key">Price:</span>
-                <span class="info-value">{{ stock.price }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-key">Available Quantity:</span>
-                <span class="info-value">{{ stock.quantityOwned }}</span>
-              </div>
+<div *ngIf="sellStocks.length === 0">
+  <mat-card class="empty-card">
+      No Holdings available.
+  </mat-card>
+</div>
+<div class="card-container" *ngIf="sellStocks.length > 0">
+  <ng-container *ngFor="let price of sellStocks">
+    <mat-card class="stock-card">
+      <mat-card-content>
+        <div class="info">
+          <div class="info-item">
+            <span class="info-key">Instrument ID:</span>
+            <span class="info-value">{{ price.instrumentId }}</span>
           </div>
-        </mat-card-content>
-        <div class="button-container">
-            <button mat-raised-button>Sell</button>
+          <div class="info-item">
+            <span class="info-key">Bid Price:</span>
+            <span class="info-value">{{ price.executionPrice }}</span>
           </div>
-      </mat-card>
-    </ng-container>
-</div>  
+          <div class="info-item">
+            <span class="info-key">Quantity Available:</span>
+            <span class="info-value">{{ price.quantity }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+        <div class="input-container">
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" placeholder="Quantity" [(ngModel)]="price.quantityToTrade" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Target Price</mat-label>
+            <input matInput type="number" placeholder="Target Price" [(ngModel)]="price.targetPrice" />
+          </mat-form-field>
+        </div>
+      <div class="button-container">
+        <button mat-raised-button (click)="sellStock(price)">Sell</button>
+      </div>
+    </mat-card>
+  </ng-container>
+</div>
   

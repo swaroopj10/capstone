@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { StockService } from 'src/app/services/stock.service';
+import { TradeHistoryService } from 'src/app/services/trade-history.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-trade-history',
@@ -6,5 +9,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./trade-history.component.css']
 })
 export class TradeHistoryComponent {
+  stocks: any[] = [];
+  clientId = sessionStorage.getItem('clientId');
+  defaultClientId: string = this.clientId ?? '';
 
+  constructor(private tradeHistoryService: TradeHistoryService) {}
+
+  ngOnInit() {
+    this.tradeHistoryService.getTradeHistory(this.defaultClientId).subscribe({
+      next: (data) => {
+        this.stocks = data;
+      },
+      error: (error) => {
+        Swal.fire('Error fetching trade history', error, 'error');
+      }
+    });
+  }
 }

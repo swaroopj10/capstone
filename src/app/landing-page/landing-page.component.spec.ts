@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { LandingPageComponent } from './landing-page.component';
+import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -8,7 +10,8 @@ describe('LandingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LandingPageComponent ]
+      declarations: [ LandingPageComponent ],
+      imports:[MatToolbarModule,MatIconModule,RouterTestingModule]
     })
     .compileComponents();
 

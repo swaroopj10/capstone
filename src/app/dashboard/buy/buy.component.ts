@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Price } from 'src/app/models/price';
+import { BuyService } from 'src/app/services/buy.service';
 import { StockService } from 'src/app/services/stock.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -10,27 +13,57 @@ import { StockService } from 'src/app/services/stock.service';
 })
 export class BuyComponent {
   stocks: any[] = [];
+ 
 
-  constructor(private stockService: StockService) {}
+  constructor(private buyService: BuyService) {}
 
   ngOnInit() {
-    this.stocks = this.stockService.getStocks();
+    this.getPrices(); 
   }
 
-  buyStock(stock: any) {
-    if (stock.quantityToBuy > 0) {
-      const success = this.stockService.executeBuyTrade(
-        stock,
-        stock.quantityToBuy
-      );
+  getPrices() {
+    this.buyService.getPrices()
+      .subscribe({
+        next: (prices: any[]) => {
+          this.stocks = prices;
+        },
+        error: (error) => {
+          console.error('Error fetching prices:', error);
+        }
+      });
+  }
 
-      if (success) {
-        this.stockService.availableBalance -= stock.price * stock.quantityToBuy;
-        stock.quantityToBuy = 0;
-        alert('The Stock was bought successfully');
-      } else {
-        alert('Trade could not be executed. Insufficient balance or stock not available.');
-      }
+  buyStock(price: Price) {
+    if (
+      price.quantityToTrade >= price.instrument.minQuantity &&
+      price.quantityToTrade <= price.instrument.maxQuantity &&
+      price.targetPrice <= price.askPrice * 1.05 && 
+      price.targetPrice >= price.askPrice * 0.95 
+    ) {
+      // Call the executeBuy method and subscribe to the response
+      this.buyService.executeBuy(
+        price.instrument.instrumentId,
+        price.quantityToTrade,
+        price.targetPrice
+      ).subscribe({
+        next: (response) => {
+          // Check if the response indicates success (you may need to adjust this based on your API response)
+          if (response && response.success) {
+            Swal.fire('Buy Trade executed successfully!');
+          } else {
+            Swal.fire('Trade could not be executed. Insufficient balance or stock not available.');
+          }
+        },
+        error: (error) => {
+          console.error('Error executing buy:', error);
+          Swal.fire('Error executing buy. Please try again later.');
+        },
+        complete: () => {
+          Swal.fire('Buy trade execution completed.');
+        }
+      });
+    } else {
+      Swal.fire('Conditions not satisfied. Please check quantity and target price.');
     }
   }
 }

@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BuyComponent } from './buy.component';
+import { MatCardModule, MatCardSmImage } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BuyComponent', () => {
   let component: BuyComponent;
@@ -8,7 +13,8 @@ describe('BuyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BuyComponent ]
+      declarations: [ BuyComponent ],
+      imports:[MatCardModule,MatFormFieldModule,FormsModule,MatInputModule,BrowserAnimationsModule]
     })
     .compileComponents();
 

@@ -1,38 +1,37 @@
 <div class="container">
-    <form #formData="ngForm" (ngSubmit)="onSubmit(formData)">
+    <form #formData="ngForm" (ngSubmit)="onSubmit(formData.value)">
       <mat-card>
         <mat-card-content>
-            <mat-checkbox name="acceptTerms" [(ngModel)]="formDataModel.acceptTerms" (change)="onCheckboxChange($event)" [color]="componentColor">I accept the Robo-Advisor Terms and Conditions</mat-checkbox>
-                <div *ngIf="formDataModel.acceptTerms">
-                <h2>Investment Preference Form</h2>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Income Purpose" name="incomePurpose" [(ngModel)]="formDataModel.incomePurpose">
-                </mat-form-field>
-    
-                <!-- Select Buttons -->
-                <mat-form-field class="full-width">
-                    <mat-label>Income Category</mat-label>
-                    <mat-select name="incomeCategory" [(ngModel)]="formDataModel.incomeCategory">
-                        <mat-option *ngFor="let category of incomeCategories" [value]="category">{{ category }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-        
-                <mat-form-field class="full-width">
-                    <mat-label>Investment Length</mat-label>
-                    <mat-select name="investmentLength" [(ngModel)]="formDataModel.investmentLength">
-                    <mat-option *ngFor="let length of investmentLengths" [value]="length">{{ length }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-        
-                <mat-form-field class="full-width">
-                    <mat-label>Risk Tolerance</mat-label>
-                    <mat-select name="riskTolerance" [(ngModel)]="formDataModel.riskTolerance">
-                    <mat-option *ngFor="let risk of riskTolerances" [value]="risk">{{ risk }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-        
-                <button mat-raised-button color="primary" type="submit" [disabled]="!formDataModel.acceptTerms">Submit</button>
-            </div>
+          <div>
+            <h2>Investment Preference Form</h2>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Investment Purpose" name="investmentPurpose" [(ngModel)]="formDataModel.investmentPurpose">
+            </mat-form-field>
+  
+            <!-- Select Buttons -->
+            <mat-form-field class="full-width">
+                <mat-label>Income Category</mat-label>
+                <mat-select name="incomeCategory" [(ngModel)]="formDataModel.incomeCategory">
+                  <mat-option *ngFor="let category of incomeCategories" [value]="category">{{ category }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <mat-form-field class="full-width">
+                <mat-label>Investment Length</mat-label>
+                <mat-select name="investmentLength" [(ngModel)]="formDataModel.investmentLength">
+                  <mat-option *ngFor="let length of investmentLengths" [value]="length">{{ length }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+  
+            <mat-form-field class="full-width">
+              <mat-label>Risk Tolerance</mat-label>
+              <mat-select name="riskTolerance" [(ngModel)]="formDataModel.riskTolerance">
+                <mat-option *ngFor="let risk of riskTolerances" [value]="risk">{{ risk }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+  
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </div>
         </mat-card-content>
       </mat-card>
     </form>

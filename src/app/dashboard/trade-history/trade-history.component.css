@@ -1,0 +1,50 @@
+tr td {
+    text-align: center;
+}
+
+table {
+    table-layout: auto;
+    margin: 50px auto 50px auto;
+    width: 90%;
+    height: 60%;
+    border-collapse: collapse;
+    border: 3px solid #8f91a2ff;
+    padding: 20px;
+    border-spacing: 10px;
+}
+
+thead th:nth-child(1) {
+    width: 30%;
+}
+tr {
+    margin-bottom: 10px;
+}
+td, th {
+    padding: 20px;
+}
+tr:nth-child(even) {
+    background-color: #e7eaee;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #8f91a2ff;
+    color: white;
+    font-size: x-large;
+}
+
+.empty-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    width: 50%;
+    background-color: #8f91a2ff;
+    color: white;
+    min-height: 250px;
+    font-size: xx-large;
+    margin-left: 350px;
+}

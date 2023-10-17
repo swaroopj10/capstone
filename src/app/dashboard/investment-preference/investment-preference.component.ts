@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { IncomeCategory, getIncomeCategoryLabel } from 'src/app/models/income-category.enum';
+import { InvestmentLength, getInvestmentLengthLabel } from 'src/app/models/investment-length.enum';
+import { InvestmentPreference } from 'src/app/models/investment-preference';
+import { RiskTolerance } from 'src/app/models/risk-tolerance.enum';
+import { InvestmentPreferencesService } from 'src/app/services/investment-preferences.service';
+import Swal from 'sweetalert2';
+import { mapIncomeCategory, mapIncomeCategoryInsert, mapInvestmentLength, mapInvestmentLengthInsert } from './enum-mapper';
 
 @Component({
   selector: 'app-investment-preference',
@@ -8,37 +13,76 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./investment-preference.component.css']
 })
 
-  export class InvestmentPreferenceComponent {
-    componentColor = "primary";
-    formDataModel = {
-      incomePurpose: '',
-      incomeCategory: '',
-      investmentLength: '',
-      riskTolerance: '',
-      acceptTerms: false
-    };
-  
-  submittedData: any;
-  
-  riskTolerances: string[] = [ 'CONSERVATIVE', 'BELOW AVERAGE', 'AVERAGE', 'ABOVE AVERAGE', 'AGGRESSIVE'];
-  incomeCategories: string[] = [ '0 - 20,000', '20,001 - 40,000', '40,001 - 60,000', '60,001 - 80,000', '80,001 - 100,000', '100,001 - 150,000', '150,000+'];
-  investmentLengths: string[] = [ '0-5 years', '5-7 years', '7-10 years', '10-15 years' ];
-  
-    onSubmit(formData: any): void {
-      if (formData.valid) {
-        // Save the data (e.g., send it to an API)
-        console.log('Submitted Data:', this.formDataModel);
-  
-        // Update the form data with submitted values
-        this.submittedData = { ...this.formDataModel };
-  
-        // Display an alert that preferences have been updated
-        alert('Preferences have been updated.');
+export class InvestmentPreferenceComponent {
+
+  constructor(private investmentPreferenceService: InvestmentPreferencesService) {}
+  sessionClientId = sessionStorage.getItem('clientId');
+  defaultClientId: string = this.sessionClientId ?? '100';
+  incomeCategories: string[] = Object.values(IncomeCategory).map(getIncomeCategoryLabel);
+  investmentLengths: string[] = Object.values(InvestmentLength).map(getInvestmentLengthLabel);
+  riskTolerances: string[] = Object.values(RiskTolerance);
+  componentColor = 'primary';
+  formDataModel: InvestmentPreference = {
+    clientId: this.defaultClientId,
+    investmentPurpose: '',
+    incomeCategory: IncomeCategory.NONE,
+    investmentLength: InvestmentLength.NONE,
+    riskTolerance: RiskTolerance.NONE
+  };
+  preferences: InvestmentPreference | undefined;
+
+  ngOnInit(): void {
+    this.loadInvestmentPreferences();
+  }
+
+  loadInvestmentPreferences(): void {
+    this.investmentPreferenceService.getPreferences(this.defaultClientId).subscribe((data) => {
+      this.preferences = data;
+      if (this.preferences) {
+        this.formDataModel.investmentPurpose = this.preferences.investmentPurpose;
+        this.formDataModel.incomeCategory = mapIncomeCategory(this.preferences.incomeCategory);
+        this.formDataModel.investmentLength = mapInvestmentLength(this.preferences.investmentLength);
+        this.formDataModel.riskTolerance = this.preferences.riskTolerance;
       }
-    }
+    });
+  }
 
-    onCheckboxChange(event: any): void {
-      this.formDataModel.acceptTerms = event.checked;
+  onSubmit(formData: InvestmentPreference): void {
+    const mappedFormData: any = {
+      clientId: this.defaultClientId,
+      investmentPurpose: formData.investmentPurpose,
+      incomeCategory: mapIncomeCategoryInsert(formData.incomeCategory),
+      investmentLength: mapInvestmentLengthInsert(formData.investmentLength),
+      riskTolerance: formData.riskTolerance
+    };
+    if (this.preferences) {
+      this.updateInvestmentPreferences(mappedFormData);
+    } else {
+      this.insertInvestmentPreferences(mappedFormData);
     }
-  }  
+  }
 
+  insertInvestmentPreferences(formData: InvestmentPreference): void {
+    this.investmentPreferenceService.insertInvestmentPreferences(formData).subscribe({
+      next: (response) => {
+        Swal.fire('Success', 'Investment preferences inserted successfully', 'success');
+      },
+      error: (error) => {
+        Swal.fire('Error', 'Failed to insert investment preferences', 'error');
+        console.error('Insert Error:', error);
+      }
+    });
+  }
+
+  updateInvestmentPreferences(formData: InvestmentPreference): void {
+    this.investmentPreferenceService.updateInvestmentPreferences(formData).subscribe({
+      next: (response) => {
+        Swal.fire('Success', 'Investment preferences updated successfully', 'success');
+      },
+      error: (error) => {
+        Swal.fire('Error', 'Failed to update investment preferences', 'error');
+        console.error('Update Error:', error);
+      }
+    });
+  }
+}

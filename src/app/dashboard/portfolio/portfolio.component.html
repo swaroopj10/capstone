@@ -1,28 +1,42 @@
-
 <div *ngIf="stocks.length === 0">
     <mat-card class="empty-card">
-      To Holdings available.
+        No Holdings available.
     </mat-card>
-  </div>
-<table *ngIf="stocks.length > 0">
-    <thead>
-        <tr>
-            <th>Instrument ID</th>
-            <th>External Id Type</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let stock of stocks">
-            <td>{{stock.instrumentId}}</td>
-            <td>{{stock.externalIdType}}</td>
-            <td>{{stock.categoryId}}</td>
-            <td>{{stock.instrumentDescription}}</td>
-            <td>{{stock.quantityOwned}}</td>
-            <td>{{stock.price}}</td>
-        </tr>
-    </tbody>
-</table>
+</div>
+<div class="container" *ngIf="stocks.length > 0">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                Portfolio Overview
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="balance">
+                <h1><p>Available Balance</p></h1>
+                <h2>{{availableBalance | currency}}</h2>
+            </div>
+            <div class="worth">
+            <h1><p>Portfolio Worth</p></h1>
+                <h2>{{portfolioWorth | currency}}</h2>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <table>
+        <thead>
+            <tr>
+                <th>Instrument ID</th>
+                <th>Quantity</th>
+                <th>Execution Price</th>
+                <th>Cash Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let stock of stocks">
+                <td>{{stock.instrumentId}}</td>
+                <td>{{stock.quantity}}</td>
+                <td>{{stock.executionPrice | currency}}</td>
+                <td>${{stock.cashValue | number:'1.2-2'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

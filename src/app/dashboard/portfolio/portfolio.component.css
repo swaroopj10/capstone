@@ -1,18 +1,22 @@
-tr td{
+tr td {
     text-align: center;
 }
-table{
+
+table {
     table-layout: auto;
-    margin: 50px auto 50px auto;
+    margin: 50px 50px 50px 50px;
     width: 90%;
-    height:60%;
+    height: 60%;
     border-collapse: collapse;
     border: 3px solid #8f91a2ff;
     padding: 20px;
+    
 }
-
-tr:nth-child(even){
-    background-color:#e7eaee;
+td{
+    padding: 20px;
+}
+tr:nth-child(even) {
+    background-color: #e7eaee;
 }
 
 .empty-card {
@@ -36,4 +40,36 @@ th {
     background-color: #8f91a2ff;
     color: white;
     font-size: x-large;
-  }
+}
+
+mat-card {
+    width: 300px;
+    margin: 20px;
+    background-color: #8f91a2ff;
+    color: white;
+}
+mat-card-title {
+    font-size: xx-large;
+    text-align: center;
+    padding: 10px;
+    justify-content: center;
+}
+
+.balance,
+.worth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.balance h2,
+.worth h2 {
+    font-size: 24px;
+    margin: 5px 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
