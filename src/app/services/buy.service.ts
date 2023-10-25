@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root'
 })
 export class BuyService {
-  private url = 'http://localhost:8080/api/sendTradeRequest';
+  private url = 'https://a745151.roifmr.com/api/sendTradeRequest';
   constructor(private http: HttpClient) {}
   executeBuy(
     instrumentId: string,
@@ -45,7 +45,7 @@ export class BuyService {
         })
       );
   }
-  private apiUrl = 'http://localhost:8080/api/prices'; 
+  private apiUrl = 'https://a745151.roifmr.com/api/prices'; 
 
 
   getPrices(): Observable<Price[]> {

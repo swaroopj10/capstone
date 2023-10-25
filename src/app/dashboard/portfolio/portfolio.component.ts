@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { PortfolioService } from 'src/app/services/portfolio.service';
-import { StockService } from 'src/app/services/stock.service';
 import Swal from 'sweetalert2';
 
 @Component({

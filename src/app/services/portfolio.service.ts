@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PortfolioService {
-  private baseUrl = 'http://localhost:8080/api'; 
+  private baseUrl = 'https://a745151.roifmr.com/api'; 
 
   constructor(private http: HttpClient) {}
 

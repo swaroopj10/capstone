@@ -10,8 +10,8 @@ import { InvestmentPreference } from '../models/investment-preference';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/login'; 
-  private baseUrl = 'http://localhost:8080/api/preferences/listPreference';
+  private apiUrl = 'https://a745151.roifmr.com/api/login'; 
+  private baseUrl = 'https://a745151.roifmr.com/api/preferences/listPreference';
   constructor(private http: HttpClient) {}
 
   checkInvestmentPreferences(clientId: string): Observable<boolean> {
@@ -40,6 +40,7 @@ export class AuthService {
   login(email: string, clientId: string): Observable<ClientResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     });
 
     const body = {

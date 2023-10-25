@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { StockService } from 'src/app/services/stock.service';
 import { TradeHistoryService } from 'src/app/services/trade-history.service';
 import Swal from 'sweetalert2';
 

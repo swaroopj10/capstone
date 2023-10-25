@@ -9,7 +9,7 @@ import { Client } from '../models/client';
   providedIn: 'root',
 })
 export class ClientService {
-  private apiUrl = 'http://localhost:8080/api/register'; 
+  private apiUrl = 'https://a745151.roifmr.com/api/register'; 
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoboAdvisorService {
-  private url = 'http://localhost:8080/api/roboadvisor/buy';
+  private url = 'https://a745151.roifmr.com/api/roboadvisor/buy';
   constructor(private http: HttpClient) {}
 
   getPrices(clientId: string): Observable<Price[]> {

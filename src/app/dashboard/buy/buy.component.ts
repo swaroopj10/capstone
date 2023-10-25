@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Price } from 'src/app/models/price';
 import { BuyService } from 'src/app/services/buy.service';
-import { StockService } from 'src/app/services/stock.service';
 import Swal from 'sweetalert2';
 
 

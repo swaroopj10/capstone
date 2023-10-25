@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root'
 })
 export class SellService {
-  private url = 'http://localhost:8080/api/sendTradeRequest';
+  private url = 'https://a745151.roifmr.com/api/sendTradeRequest';
   constructor(private http: HttpClient) {}
   executeSell(
     instrumentId: string,

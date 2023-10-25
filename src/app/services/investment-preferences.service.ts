@@ -9,7 +9,7 @@ import { InvestmentPreference } from '../models/investment-preference';
   providedIn: 'root',
 })
 export class InvestmentPreferencesService {
-  private preferencesUrl = 'http://localhost:8080/api/preferences';
+  private preferencesUrl = 'https://a745151.roifmr.com/api/preferences';
 
   constructor(private http: HttpClient) {}
 
